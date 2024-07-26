@@ -1,0 +1,69 @@
+env
+credentials.json
+# Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Secret key
+secret_key.txt
+
+# Static files
+static/
+
+# Media files
+media/
+
+# Virtual environment
+venv/
+# .env
+
+# Development-specific files
+*.sqlite3
+db.sqlite3
+*.log
+*.pyc
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Dependency directories
+node_modules/
+
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+pids
+*.pid
+
+# dotenv environment variables file
+.env
+env
+
+# Compiled binary addons
+build/Release/
+
+# TypeScript
+*.tsbuildinfo
+
+# macOS
+.DS_Store
+
+# Editor-specific files
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.idea/
+
+# Package-lock files
+package-lock.json
+yarn.lock
