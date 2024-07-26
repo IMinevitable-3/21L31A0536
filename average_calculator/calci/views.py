@@ -40,32 +40,36 @@ class Type(APIView):
                 {"error": "Invalid type"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        if type == "e":
-            new_numbers = giveMeNumbers("/test/even")
-            if not new_numbers:
-                return Response(
-                    {"error": "Failed to fetch numbers within 500ms after 10 retries"},
-                    status=status.HTTP_504_GATEWAY_TIMEOUT,
-                )
+        endpoint_mapping = {
+            "e": "/test/even",
+            "p": "/test/prime",
+            "f": "/test/fibonacci",
+            "r": "/test/random",
+        }
 
-            prev = NUMBERS.copy()
-            for num in new_numbers:
-                if num not in NUMBERS:
-                    NUMBERS.append(num)
-                    if len(NUMBERS) > windowSize:
-                        NUMBERS.pop(0)
-
-            curr = NUMBERS.copy()
-            avg = sum(curr) / len(curr) if curr else 0
-
+        new_numbers = giveMeNumbers(endpoint_mapping[type])
+        if not new_numbers:
             return Response(
-                {
-                    "numbers": new_numbers,
-                    "windowPrevState": prev,
-                    "windowCurrState": curr,
-                    "avg": avg,
-                },
-                status=status.HTTP_200_OK,
+                {"error": "Failed to fetch numbers within 500ms after 10 retries"},
+                status=status.HTTP_504_GATEWAY_TIMEOUT,
             )
 
-        return Response({"type": type}, status=status.HTTP_200_OK)
+        prev = NUMBERS.copy()
+        for num in new_numbers:
+            if num not in NUMBERS:
+                NUMBERS.append(num)
+                if len(NUMBERS) > windowSize:
+                    NUMBERS.pop(0)
+
+        curr = NUMBERS.copy()
+        avg = sum(curr) / len(curr) if curr else 0
+
+        return Response(
+            {
+                "numbers": new_numbers,
+                "windowPrevState": prev,
+                "windowCurrState": curr,
+                "avg": avg,
+            },
+            status=status.HTTP_200_OK,
+        )
